@@ -1,0 +1,17 @@
+<expr> ::= <term> "|" <expr>
+            | <term>
+<term> ::= <factor> <term>
+            | ""
+<factor> ::=  <atom> <closure_list>
+               | <atom>
+<closure_list> ::= '*' <closure_list> 
+                    | '*'
+<atom> ::= '(' <expr> ')'
+            | <symbol>
+
+expr = term { "|" term }
+term = { factor }
+factor = atom [ closure_list ]
+closure_list = '*' { '*' }
+atom = '(' expr ')'
+        | symbol

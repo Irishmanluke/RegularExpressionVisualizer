@@ -1,0 +1,239 @@
+Created by PLY version 3.4 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> expr
+Rule 1     expr -> term BAR expr
+Rule 2     expr -> term
+Rule 3     term -> factor term
+Rule 4     term -> <empty>
+Rule 5     factor -> atom closure_list
+Rule 6     factor -> atom
+Rule 7     closure_list -> STAR closure_list
+Rule 8     closure_list -> STAR
+Rule 9     atom -> LPAREN expr RPAREN
+Rule 10    atom -> SYMBOL
+
+Terminals, with rules where they appear
+
+BAR                  : 1
+LPAREN               : 9
+RPAREN               : 9
+STAR                 : 7 8
+SYMBOL               : 10
+error                : 
+
+Nonterminals, with rules where they appear
+
+atom                 : 5 6
+closure_list         : 5 7
+expr                 : 1 9 0
+factor               : 3
+term                 : 1 2 3
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . expr
+    (1) expr -> . term BAR expr
+    (2) expr -> . term
+    (3) term -> . factor term
+    (4) term -> .
+    (5) factor -> . atom closure_list
+    (6) factor -> . atom
+    (9) atom -> . LPAREN expr RPAREN
+    (10) atom -> . SYMBOL
+
+    BAR             reduce using rule 4 (term -> .)
+    $end            reduce using rule 4 (term -> .)
+    LPAREN          shift and go to state 5
+    SYMBOL          shift and go to state 3
+
+    expr                           shift and go to state 2
+    term                           shift and go to state 1
+    atom                           shift and go to state 6
+    factor                         shift and go to state 4
+
+state 1
+
+    (1) expr -> term . BAR expr
+    (2) expr -> term .
+
+    BAR             shift and go to state 7
+    RPAREN          reduce using rule 2 (expr -> term .)
+    $end            reduce using rule 2 (expr -> term .)
+
+
+state 2
+
+    (0) S' -> expr .
+
+
+
+state 3
+
+    (10) atom -> SYMBOL .
+
+    STAR            reduce using rule 10 (atom -> SYMBOL .)
+    LPAREN          reduce using rule 10 (atom -> SYMBOL .)
+    SYMBOL          reduce using rule 10 (atom -> SYMBOL .)
+    BAR             reduce using rule 10 (atom -> SYMBOL .)
+    RPAREN          reduce using rule 10 (atom -> SYMBOL .)
+    $end            reduce using rule 10 (atom -> SYMBOL .)
+
+
+state 4
+
+    (3) term -> factor . term
+    (3) term -> . factor term
+    (4) term -> .
+    (5) factor -> . atom closure_list
+    (6) factor -> . atom
+    (9) atom -> . LPAREN expr RPAREN
+    (10) atom -> . SYMBOL
+
+    BAR             reduce using rule 4 (term -> .)
+    $end            reduce using rule 4 (term -> .)
+    RPAREN          reduce using rule 4 (term -> .)
+    LPAREN          shift and go to state 5
+    SYMBOL          shift and go to state 3
+
+    term                           shift and go to state 8
+    atom                           shift and go to state 6
+    factor                         shift and go to state 4
+
+state 5
+
+    (9) atom -> LPAREN . expr RPAREN
+    (1) expr -> . term BAR expr
+    (2) expr -> . term
+    (3) term -> . factor term
+    (4) term -> .
+    (5) factor -> . atom closure_list
+    (6) factor -> . atom
+    (9) atom -> . LPAREN expr RPAREN
+    (10) atom -> . SYMBOL
+
+    BAR             reduce using rule 4 (term -> .)
+    RPAREN          reduce using rule 4 (term -> .)
+    LPAREN          shift and go to state 5
+    SYMBOL          shift and go to state 3
+
+    expr                           shift and go to state 9
+    term                           shift and go to state 1
+    atom                           shift and go to state 6
+    factor                         shift and go to state 4
+
+state 6
+
+    (5) factor -> atom . closure_list
+    (6) factor -> atom .
+    (7) closure_list -> . STAR closure_list
+    (8) closure_list -> . STAR
+
+    LPAREN          reduce using rule 6 (factor -> atom .)
+    SYMBOL          reduce using rule 6 (factor -> atom .)
+    BAR             reduce using rule 6 (factor -> atom .)
+    $end            reduce using rule 6 (factor -> atom .)
+    RPAREN          reduce using rule 6 (factor -> atom .)
+    STAR            shift and go to state 11
+
+    closure_list                   shift and go to state 10
+
+state 7
+
+    (1) expr -> term BAR . expr
+    (1) expr -> . term BAR expr
+    (2) expr -> . term
+    (3) term -> . factor term
+    (4) term -> .
+    (5) factor -> . atom closure_list
+    (6) factor -> . atom
+    (9) atom -> . LPAREN expr RPAREN
+    (10) atom -> . SYMBOL
+
+    BAR             reduce using rule 4 (term -> .)
+    $end            reduce using rule 4 (term -> .)
+    RPAREN          reduce using rule 4 (term -> .)
+    LPAREN          shift and go to state 5
+    SYMBOL          shift and go to state 3
+
+    expr                           shift and go to state 12
+    term                           shift and go to state 1
+    atom                           shift and go to state 6
+    factor                         shift and go to state 4
+
+state 8
+
+    (3) term -> factor term .
+
+    BAR             reduce using rule 3 (term -> factor term .)
+    $end            reduce using rule 3 (term -> factor term .)
+    RPAREN          reduce using rule 3 (term -> factor term .)
+
+
+state 9
+
+    (9) atom -> LPAREN expr . RPAREN
+
+    RPAREN          shift and go to state 13
+
+
+state 10
+
+    (5) factor -> atom closure_list .
+
+    LPAREN          reduce using rule 5 (factor -> atom closure_list .)
+    SYMBOL          reduce using rule 5 (factor -> atom closure_list .)
+    BAR             reduce using rule 5 (factor -> atom closure_list .)
+    $end            reduce using rule 5 (factor -> atom closure_list .)
+    RPAREN          reduce using rule 5 (factor -> atom closure_list .)
+
+
+state 11
+
+    (7) closure_list -> STAR . closure_list
+    (8) closure_list -> STAR .
+    (7) closure_list -> . STAR closure_list
+    (8) closure_list -> . STAR
+
+    LPAREN          reduce using rule 8 (closure_list -> STAR .)
+    SYMBOL          reduce using rule 8 (closure_list -> STAR .)
+    BAR             reduce using rule 8 (closure_list -> STAR .)
+    $end            reduce using rule 8 (closure_list -> STAR .)
+    RPAREN          reduce using rule 8 (closure_list -> STAR .)
+    STAR            shift and go to state 11
+
+    closure_list                   shift and go to state 14
+
+state 12
+
+    (1) expr -> term BAR expr .
+
+    RPAREN          reduce using rule 1 (expr -> term BAR expr .)
+    $end            reduce using rule 1 (expr -> term BAR expr .)
+
+
+state 13
+
+    (9) atom -> LPAREN expr RPAREN .
+
+    STAR            reduce using rule 9 (atom -> LPAREN expr RPAREN .)
+    LPAREN          reduce using rule 9 (atom -> LPAREN expr RPAREN .)
+    SYMBOL          reduce using rule 9 (atom -> LPAREN expr RPAREN .)
+    BAR             reduce using rule 9 (atom -> LPAREN expr RPAREN .)
+    RPAREN          reduce using rule 9 (atom -> LPAREN expr RPAREN .)
+    $end            reduce using rule 9 (atom -> LPAREN expr RPAREN .)
+
+
+state 14
+
+    (7) closure_list -> STAR closure_list .
+
+    LPAREN          reduce using rule 7 (closure_list -> STAR closure_list .)
+    SYMBOL          reduce using rule 7 (closure_list -> STAR closure_list .)
+    BAR             reduce using rule 7 (closure_list -> STAR closure_list .)
+    $end            reduce using rule 7 (closure_list -> STAR closure_list .)
+    RPAREN          reduce using rule 7 (closure_list -> STAR closure_list .)
+

@@ -1,0 +1,42 @@
+#!/usr/bin/python -B
+
+import sys
+from FSM import FSM
+
+USAGE = "USAGE: {0} -ll|-lr \n"
+
+extension = ".dot"
+
+def main():
+    argc = len(sys.argv)
+    if( argc!=2 ):
+        sys.stderr.write(USAGE.format(sys.argv[0])) 
+        sys.exit(1)
+
+    if sys.argv[1] == "-ll":
+        from RegEx2FSM_LL import parse
+    elif sys.argv[1] == "-lr":
+        from RegEx2FSM_LR import parse
+    else:
+        sys.stderr.write(USAGE.format(sys.argv[0])) 
+        sys.exit(1)
+
+    i = 1 
+    while True:
+        line = sys.stdin.readline().strip()
+        if not line:
+            break
+        try:
+            fsm = parse(line)
+        except ValueError:
+            print "Invalid regular expression"
+            continue
+
+        ofname = str(i) + extension
+        of = open(ofname,"w")
+        fsm.exportToGraph(of)
+        of.close()
+        i +=1
+
+if __name__ == "__main__":
+    main()
